@@ -1,0 +1,58 @@
+import src.tripulantes.nativo.*
+import src.tripulantes.liberado.*
+import src.tripulantes.cambiante.*
+import src.tripulantes.elegido.*
+import src.hovercraft.*
+import src.zino.*
+
+describe "Tests pedidos en el enunciado" {
+
+    // Modelado de la tripulacion de Nabucodonosor
+    const tanque = new Nativo(peso = 100)
+    const morfeo = new Liberado(peso = 90, desarraigo = 0.5)
+    const trinica = new Cambiante(peso = 55, desarraigo = 0.6)
+
+    // Modelado de la tripulacion de Logo
+    const nuveo = new Elegido(peso = 80)
+    const dosis = new Nativo(peso = 82)
+
+    // Modelado de las Hovercraft
+    const nabucodonosor = new Hovercraft(tripulantes = [tanque, morfeo, trinica], reservasDeProteinas = 10000)
+    const logo = new Hovercraft(tripulantes = [nuveo, dosis], reservasDeProteinas = 0)
+
+    // Carga de las especificaciones de Zino y los Hovercraft
+    method initialize(){
+        // Adicion de las hovercraft a la flota de Zino
+        zino.agregarHovercraftALaFlota(nabucodonosor)
+        zino.agregarHovercraftALaFlota(logo)
+
+        // Conectando los tripulantes de Nabucodonosor
+        nabucodonosor.conectar(tanque)
+        nabucodonosor.conectar(morfeo)
+
+        // Conectando los tripulantes de Logo
+        logo.conectar(nuveo)
+    }
+
+
+    test "Los mas pesados de Zino son Tanque y Dosis" {
+        assert.equals([tanque, dosis] ,zino.tripulantesMasPesadosDeLaFlota())
+    }
+
+    test "Las calorias diarias que consumen los tripulantes de la flota de Zino es 7800" {
+        assert.equals(7800 ,zino.caloriasQueConsumeLaFlota())
+    }
+
+    test "Nabucodonosor es la nave con mas conectados" {
+        assert.equals(nabucodonosor ,zino.hovercraftConMasConectados())
+    }
+
+    test "Si buscas una nave con 3 o mas tripulantes, encontraras a Nabucodonosor" {
+        assert.equals(nabucodonosor ,zino.hovercraftConAlMenos(3))
+    }
+
+    test "Seria imposible encontrar una nave con 4 tripulantes" {
+        assert.throwsException({ zino.hovercraftConAlMenos(4) })
+    }
+
+}

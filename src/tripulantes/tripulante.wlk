@@ -2,11 +2,11 @@ class Tripulante {
     var property peso
 
     method caloriasQueConsume(){
-        return self.caloriasBase() * self.multiplicadorDeCalorias()
+        return (self.caloriasBase() * self.multiplicadorDeCalorias()) + self.caloriasExtra()
     }
 
     method comer(){
-        peso += (self.caloriasQueConsume() / self.metabolismo()) + self.caloriasExtra()
+        peso += self.caloriasQueConsume() / self.metabolismo()
     }
 
     method metabolismo(){

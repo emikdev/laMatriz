@@ -1,5 +1,5 @@
 // Implementacion del inciso 3.b
-class Zino {
+object zino {
     const flotaDeHovercraft = []
 
     method agregarHovercraftALaFlota(hovercraft){
@@ -30,7 +30,10 @@ class Zino {
     }
 
     method hovercraftConAlMenos(cantidadDeTripulantes){
-        return flotaDeHovercraft.find({hovercraft => hovercraft.cantidadDeTripulantes() >= cantidadDeTripulantes})
+        return flotaDeHovercraft.findOrElse(
+        {hovercraft => hovercraft.cantidadDeTripulantes() >= cantidadDeTripulantes},
+        {throw new Exception(message = "No hay ningun hovercraft con al menos " + cantidadDeTripulantes.toString() + " tripulantes")}
+    )
     }
 
 
